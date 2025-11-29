@@ -1,0 +1,21 @@
+Input:
+
+df = pd.DataFrame({
+    'Product': ['A', 'B', 'C'],
+    'Sales': [100, 300, 600]
+})
+
+
+Output:
+
+Product   Sales   Percent
+A         100     10.0
+B         300     30.0
+C         600     60.0
+
+
+Solution:
+
+total = df['Sales'].sum()
+df['Percent'] = (df['Sales'] / total) * 100
+print(df)
