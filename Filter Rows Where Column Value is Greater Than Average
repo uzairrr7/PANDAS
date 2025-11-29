@@ -1,0 +1,15 @@
+Input:
+df = pd.DataFrame({
+    'Name': ['A', 'B', 'C', 'D'],
+    'Score': [40, 90, 70, 30]
+})
+
+
+
+
+
+Output:
+Rows of B and C only.
+avg = df['Score'].mean()
+result = df[df['Score'] > avg]
+print(result)
