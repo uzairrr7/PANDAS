@@ -1,0 +1,22 @@
+Input:
+
+df = pd.DataFrame({
+    'Dept': ['IT', 'HR', 'IT', 'HR', 'Sales'],
+    'Salary': [50000, 40000, 60000, 45000, 55000]
+})
+
+
+
+Output:
+
+Dept
+HR       85000
+IT      110000
+Sales    55000
+
+
+Solution:
+
+result = df.groupby('Dept')['Salary'].sum()
+print(result)
+
