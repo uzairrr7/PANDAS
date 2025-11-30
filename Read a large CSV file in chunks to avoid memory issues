@@ -1,0 +1,7 @@
+import pandas as pd
+
+chunksize = 100_000
+for chunk in pd.read_csv("huge_data.csv", chunksize=chunksize):
+    # process each chunk separately; e.g. print first few rows
+    print(chunk.head())
+    # maybe do aggregation, filtering, etc. on chunk
