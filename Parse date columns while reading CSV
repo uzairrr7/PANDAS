@@ -1,0 +1,4 @@
+import pandas as pd
+
+df = pd.read_csv("attendance.csv", parse_dates=["date"])
+print(df.dtypes)  # will show that 'date' column is datetime64[ns]
