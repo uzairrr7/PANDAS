@@ -1,0 +1,13 @@
+# 1) Compute revenue
+df_sales["revenue"] = df_sales["price"] * df_sales["quantity"]
+
+# 2) Group and aggregate
+agg_stats = df_sales.groupby("store_id").agg(
+    total_revenue=("revenue", "sum"),
+    unique_products=("product", "nunique")
+)
+
+# 3) Filter
+result = agg_stats[agg_stats["total_revenue"] >= 1000].sort_values("total_revenue", ascending=False)
+
+print(result)
