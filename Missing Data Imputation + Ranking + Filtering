@@ -1,0 +1,11 @@
+import pandas as pd
+import numpy as np
+
+data = {
+    "student": ["Alice", "Bob", "Charlie", "David", "Eva"],
+    "math": [88, 92, np.nan, 75, 85],
+    "english": [92, np.nan, 78, 80, 88],
+    "science": [np.nan, 85, 82, 78, np.nan]
+}
+
+df = pd.DataFrame(data)
