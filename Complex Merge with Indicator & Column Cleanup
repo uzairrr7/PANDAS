@@ -1,0 +1,10 @@
+# 1) Merge with indicator
+merged = df_cust.merge(df_orders, on="cust_id", how="left", indicator=True)
+
+# 2) Filter customers who made orders
+with_orders = merged[merged["_merge"] == "both"]
+
+# 3) Select and clean
+final = with_orders[["cust_id", "name", "order_id", "amount"]].sort_values("cust_id")
+
+print(final)
