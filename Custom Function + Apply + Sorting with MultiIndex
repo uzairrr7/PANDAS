@@ -1,0 +1,13 @@
+# 1) Define function
+def pct_change_group(g):
+    g = g.sort_values("month")
+    g["pct_change"] = g["price"].pct_change() * 100
+    return g
+
+# 2) Group apply
+df_changes = df_price.groupby("product").apply(pct_change_group).reset_index(drop=True)
+
+# 3) Sort by largest increase
+df_sorted = df_changes.sort_values("pct_change", ascending=False)
+
+print(df_sorted)
