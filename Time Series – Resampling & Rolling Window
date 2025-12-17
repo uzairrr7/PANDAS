@@ -1,0 +1,10 @@
+# 1) Resample daily
+daily = df_temp.resample("D").mean()
+
+# 2) Forward fill
+daily_filled = daily.ffill()
+
+# 3) 3-day rolling mean
+daily_filled["rolling_mean_3d"] = daily_filled["temp"].rolling(3, min_periods=1).mean()
+
+print(daily_filled)
