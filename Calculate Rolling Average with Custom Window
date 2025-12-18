@@ -1,0 +1,29 @@
+2. Calculate Rolling Average with Custom Window
+# ============================================================================
+print("2. Calculate Rolling Average Sales with 7-Day Window")
+print("-" * 60)
+
+# Create time series data
+dates = pd.date_range('2024-01-01', periods=30, freq='D')
+df_sales = pd.DataFrame({
+    'date': dates,
+    'sales': np.random.randint(100, 500, size=30),
+    'product': ['Product_A'] * 15 + ['Product_B'] * 15
+})
+
+print("Sample Sales Data:")
+print(df_sales.head(10))
+print()
+
+# Solution: Calculate 7-day rolling average grouped by product
+df_sales['rolling_avg_7d'] = (df_sales
+                                .groupby('product')['sales']
+                                .transform(lambda x: x.rolling(window=7, min_periods=1).mean()))
+
+df_sales['pct_change'] = (df_sales
+                           .groupby('product')['sales']
+                           .pct_change() * 100)
+
+print("With Rolling Average and Percent Change:")
+print(df_sales.head(10))
+print("\n" + "="*80 + "\n")
