@@ -1,0 +1,43 @@
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+
+print("=== Advanced Pandas Problems with Solutions ===\n")
+
+# ============================================================================
+# 1. Find Duplicate Emails and Keep Most Recent Entry
+# ============================================================================
+print("1. Find Duplicate Emails and Keep Most Recent Entry")
+print("-" * 60)
+
+# Create sample data
+df_emails = pd.DataFrame({
+    'user_id': [1, 2, 3, 4, 5, 6],
+    'email': ['john@email.com', 'jane@email.com', 'john@email.com', 
+              'bob@email.com', 'jane@email.com', 'alice@email.com'],
+    'created_at': pd.to_datetime(['2024-01-01', '2024-01-02', '2024-01-05',
+                                   '2024-01-03', '2024-01-06', '2024-01-04']),
+    'name': ['John Doe', 'Jane Smith', 'John Updated', 
+             'Bob Wilson', 'Jane Updated', 'Alice Brown']
+})
+
+print("Original Data:")
+print(df_emails)
+print()
+
+# Solution: Sort by created_at descending, then drop duplicates keeping first
+df_result = (df_emails
+             .sort_values('created_at', ascending=False)
+             .drop_duplicates(subset='email', keep='first')
+             .reset_index(drop=True))
+
+print("After removing duplicates (keeping most recent):")
+print(df_result)
+print()
+
+# Alternative: Find all duplicate emails
+duplicate_emails = df_emails[df_emails.duplicated(subset='email', keep=False)]
+print("All duplicate email entries:")
+print(duplicate_emails.sort_values(['email', 'created_at']))
+print("\n" + "="*80 + "\n")
+
