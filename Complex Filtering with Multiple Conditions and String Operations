@@ -1,0 +1,50 @@
+# ============================================================================
+# 4. Complex Filtering with Multiple Conditions and String Operations
+# ============================================================================
+print("4. Complex Filtering with String Operations")
+print("-" * 60)
+
+# Create customer data
+df_customers = pd.DataFrame({
+    'customer_id': range(1, 11),
+    'name': ['John Smith', 'Jane Doe', 'Bob Johnson', 'Alice Williams',
+             'Charlie Brown', 'David Lee', 'Emma Davis', 'Frank Miller',
+             'Grace Taylor', 'Henry Anderson'],
+    'email': ['john.smith@email.com', 'jane@company.com', 'bob.j@email.com',
+              'alice.w@company.com', 'charlie@email.com', 'david@company.com',
+              'emma.d@email.com', 'frank@company.com', 'grace@email.com',
+              'henry@company.com'],
+    'total_purchases': [1500, 3200, 800, 4500, 1200, 2800, 950, 3800, 1100, 2200],
+    'last_purchase_date': pd.to_datetime(['2024-01-15', '2024-02-20', '2024-01-10',
+                                          '2024-03-05', '2024-01-22', '2024-02-28',
+                                          '2024-01-18', '2024-03-10', '2024-01-25',
+                                          '2024-02-15'])
+})
+
+print("Customer Data:")
+print(df_customers)
+print()
+
+# Solution: Complex filtering
+# Find customers with:
+# 1. Company email domain
+# 2. Purchases > 2000
+# 3. Name contains more than one word
+# 4. Last purchase in Feb or March 2024
+
+filtered = df_customers[
+    (df_customers['email'].str.contains('@company.com')) &
+    (df_customers['total_purchases'] > 2000) &
+    (df_customers['name'].str.split().str.len() >= 2) &
+    (df_customers['last_purchase_date'].dt.month.isin([2, 3]))
+]
+
+print("Filtered Results (company email, >2000 purchases, recent activity):")
+print(filtered)
+print()
+
+# Extract first and last names
+df_customers[['first_name', 'last_name']] = df_customers['name'].str.split(n=1, expand=True)
+print("With Extracted Names:")
+print(df_customers[['customer_id', 'first_name', 'last_name', 'email']].head())
+print("\n" + "="*80 + "\n")
