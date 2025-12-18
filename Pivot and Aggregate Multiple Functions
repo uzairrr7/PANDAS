@@ -1,0 +1,42 @@
+# ============================================================================
+# 3. Pivot and Aggregate Multiple Functions
+# ============================================================================
+print("3. Pivot Table with Multiple Aggregations")
+print("-" * 60)
+
+# Create sales data by region
+df_regional = pd.DataFrame({
+    'date': pd.date_range('2024-01-01', periods=100, freq='D').repeat(3),
+    'region': ['North', 'South', 'East'] * 100,
+    'product': np.random.choice(['A', 'B', 'C'], 300),
+    'sales': np.random.randint(50, 500, 300),
+    'quantity': np.random.randint(1, 20, 300)
+})
+
+print("Sample Regional Data:")
+print(df_regional.head(10))
+print()
+
+# Solution: Create pivot table with multiple aggregations
+pivot_result = pd.pivot_table(
+    df_regional,
+    values=['sales', 'quantity'],
+    index='region',
+    columns='product',
+    aggfunc={
+        'sales': ['sum', 'mean', 'max'],
+        'quantity': ['sum', 'mean']
+    },
+    fill_value=0
+)
+
+print("Pivot Table with Multiple Aggregations:")
+print(pivot_result)
+print()
+
+# Flatten multi-level columns
+pivot_flat = pivot_result.copy()
+pivot_flat.columns = ['_'.join(col).strip() for col in pivot_flat.columns.values]
+print("Flattened Column Names:")
+print(pivot_flat.head())
+print("\n" + "="*80 + "\n")
