@@ -1,0 +1,110 @@
+# ============================================================================
+# 5. Advanced Group Operations with Custom Aggregations
+# ============================================================================
+print("5. Advanced Groupby with Custom Aggregations and Window Functions")
+print("-" * 60)
+
+# Create transaction data
+df_transactions = pd.DataFrame({
+    'transaction_id': range(1, 21),
+    'customer_id': [1, 2, 1, 3, 2, 1, 4, 3, 2, 1,
+                    4, 3, 2, 1, 4, 3, 2, 1, 4, 3],
+    'amount': np.random.randint(50, 500, 20),
+    'transaction_date': pd.date_range('2024-01-01', periods=20, freq='D')
+})
+
+print("Transaction Data:")
+print(df_transactions.head(10))
+print()
+
+# Solution: Multiple complex aggregations
+result = df_transactions.groupby('customer_id').agg(
+    total_amount=('amount', 'sum'),
+    avg_amount=('amount', 'mean'),
+    num_transactions=('transaction_id', 'count'),
+    first_purchase=('transaction_date', 'min'),
+    last_purchase=('transaction_date', 'max'),
+    std_amount=('amount', 'std')
+).round(2)
+
+# Calculate days between first and last purchase
+result['days_active'] = (result['last_purchase'] - result['first_purchase']).dt.days
+
+# Calculate average transaction value category
+result['value_category'] = pd.cut(
+    result['avg_amount'],
+    bins=[0, 150, 300, 500],
+    labels=['Low', 'Medium', 'High']
+)
+
+print("Customer Summary Statistics:")
+print(result)
+print()
+
+# Add rank based on total amount
+result['rank_by_total'] = result['total_amount'].rank(ascending=False, method='dense')
+
+print("With Rankings:")
+print(result.sort_values('total_amount', ascending=False))
+print()
+
+# Window function: cumulative sum per customer
+df_transactions = df_transactions.sort_values(['customer_id', 'transaction_date'])
+df_transactions['cumulative_spent'] = (df_transactions
+                                        .groupby('customer_id')['amount']
+                                        .cumsum())
+
+df_transactions['transaction_number'] = (df_transactions
+                                          .groupby('customer_id')
+                                          .cumcount() + 1)
+
+print("Transactions with Cumulative Amounts:")
+print(df_transactions[['transaction_id', 'customer_id', 'amount', 
+                        'cumulative_spent', 'transaction_number']].head(15))
+print("\n" + "="*80 + "\n")
+
+
+# ============================================================================
+# BONUS: Merge and Join Operations
+# ============================================================================
+print("BONUS: Complex Merge Operations")
+print("-" * 60)
+
+df_orders = pd.DataFrame({
+    'order_id': [1, 2, 3, 4, 5],
+    'customer_id': [101, 102, 103, 101, 104],
+    'order_amount': [250, 400, 150, 300, 500]
+})
+
+df_customers_info = pd.DataFrame({
+    'customer_id': [101, 102, 103, 105],
+    'customer_name': ['Alice', 'Bob', 'Charlie', 'David'],
+    'city': ['New York', 'Los Angeles', 'Chicago', 'Houston']
+})
+
+print("Orders:")
+print(df_orders)
+print("\nCustomers:")
+print(df_customers_info)
+print()
+
+# Left join
+left_join = pd.merge(df_orders, df_customers_info, on='customer_id', how='left')
+print("Left Join (all orders with customer info if available):")
+print(left_join)
+print()
+
+# Right join
+right_join = pd.merge(df_orders, df_customers_info, on='customer_id', how='right')
+print("Right Join (all customers with their orders if any):")
+print(right_join)
+print()
+
+# Outer join
+outer_join = pd.merge(df_orders, df_customers_info, on='customer_id', how='outer')
+print("Outer Join (all records from both):")
+print(outer_join)
+print()
+
+print("="*80)
+print("All Pandas problems completed!")
