@@ -1,0 +1,30 @@
+Problem
+
+Given an employee dataset, create a new column called Bonus.
+
+Salary ≥ 80000 → 20% Bonus
+Salary ≥ 60000 → 15% Bonus
+Otherwise → 10% Bonus
+
+
+
+import pandas as pd
+
+# Sample Data
+df = pd.DataFrame({
+    "Employee": ["Alice", "Bob", "Charlie", "David"],
+    "Salary": [85000, 65000, 50000, 90000]
+})
+
+# Function to calculate bonus
+def calculate_bonus(salary):
+    if salary >= 80000:
+        return salary * 0.20
+    elif salary >= 60000:
+        return salary * 0.15
+    else:
+        return salary * 0.10
+
+df["Bonus"] = df["Salary"].apply(calculate_bonus)
+
+print(df)
