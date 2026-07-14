@@ -1,0 +1,15 @@
+import pandas as pd
+
+df = pd.DataFrame({
+    "Product": ["Laptop", "Phone", "Laptop", "Tablet", "Phone", "Mouse"],
+    "Sales": [50000, 30000, 45000, 25000, 40000, 10000]
+})
+
+result = (
+    df.groupby("Product")["Sales"]
+      .sum()
+      .sort_values(ascending=False)
+      .head(3)
+)
+
+print(result)
