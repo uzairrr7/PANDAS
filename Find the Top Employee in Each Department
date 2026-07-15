@@ -1,0 +1,11 @@
+import pandas as pd
+
+df = pd.DataFrame({
+    "Employee": ["Alice", "Bob", "Charlie", "David", "Emma"],
+    "Department": ["IT", "IT", "HR", "HR", "Finance"],
+    "Salary": [70000, 90000, 50000, 65000, 80000]
+})
+
+result = df.loc[df.groupby("Department")["Salary"].idxmax()]
+
+print(result)
