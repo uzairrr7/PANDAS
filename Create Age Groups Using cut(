@@ -1,0 +1,13 @@
+import pandas as pd
+
+df = pd.DataFrame({
+    "Name": ["Alice", "Bob", "Charlie", "David"],
+    "Age": [24, 36, 48, 29]
+})
+
+bins = [18, 30, 45, 60]
+labels = ["Young", "Adult", "Senior"]
+
+df["Age Group"] = pd.cut(df["Age"], bins=bins, labels=labels)
+
+print(df)
