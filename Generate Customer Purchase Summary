@@ -1,0 +1,13 @@
+import pandas as pd
+
+df = pd.DataFrame({
+    "Customer": ["Alice", "Bob", "Alice", "Bob", "Charlie"],
+    "Amount": [500, 300, 700, 200, 1000]
+})
+
+summary = df.groupby("Customer").agg(
+    Total_Orders=("Amount", "count"),
+    Total_Spent=("Amount", "sum")
+)
+
+print(summary)
