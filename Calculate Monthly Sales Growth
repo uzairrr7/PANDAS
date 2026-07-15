@@ -1,0 +1,19 @@
+import pandas as pd
+
+df = pd.DataFrame({
+    "Month": ["Jan", "Feb", "Mar", "Apr", "May"],
+    "Sales": [10000, 12000, 15000, 14000, 18000]
+})
+
+df["Growth (%)"] = df["Sales"].pct_change() * 100
+
+print(df)import pandas as pd
+
+df = pd.DataFrame({
+    "Month": ["Jan", "Feb", "Mar", "Apr", "May"],
+    "Sales": [10000, 12000, 15000, 14000, 18000]
+})
+
+df["Growth (%)"] = df["Sales"].pct_change() * 100
+
+print(df)
