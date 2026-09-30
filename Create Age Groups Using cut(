@@ -6,8 +6,12 @@ df = pd.DataFrame({
 })
 
 bins = [18, 30, 45, 60]
+
 labels = ["Young", "Adult", "Senior"]
 
+
 df["Age Group"] = pd.cut(df["Age"], bins=bins, labels=labels)
+
+
 
 print(df)
