@@ -1,6 +1,7 @@
 Problem
-
 Given an employee dataset, create a new column called Bonus.
+
+
 
 Salary ≥ 80000 → 20% Bonus
 Salary ≥ 60000 → 15% Bonus
@@ -26,5 +27,6 @@ def calculate_bonus(salary):
         return salary * 0.10
 
 df["Bonus"] = df["Salary"].apply(calculate_bonus)
+
 
 print(df)
